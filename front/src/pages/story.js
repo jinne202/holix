@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import AppLayout from "../components/AppLayout";
+import AppLayout from "../components/layout/AppLayout";
 import styled from 'styled-components';
 import StoryCardComponents from '../components/StoryCardComponents';
 import { LOAD_POSTS_REQUEST } from '../reducers/projectReducer';
@@ -22,7 +22,7 @@ const Story = () => {
             <TestGrid>
             {projectPosts.map((c) => {
                 return (
-                <StoryCardComponents key={c} posting={c} />
+                <StoryCardComponents key={c.index} posting={c} />
                 );
             })}
             </TestGrid>

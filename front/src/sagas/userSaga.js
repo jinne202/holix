@@ -1,9 +1,13 @@
 import axios from 'axios';
 import { all, fork, put, takeLatest, throttle, call, takeEvery } from 'redux-saga/effects';
-import { LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE } from '../reducers/userReducer';
+import { LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE, SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE } from '../reducers/userReducer';
 
 function loginAPI(data) {
     return axios.post('/account/login', data)
+        .then(response => {
+            localStorage.setItem('token', response.headers.authorization)
+            console.log(response);
+        })
 }
 
 function* login(action){
@@ -11,7 +15,7 @@ function* login(action){
         const result = yield call(loginAPI, action.data);
         yield put({
             type : LOG_IN_SUCCESS,
-            data : result.data,
+            // data : result.data,
         });
     } catch (e) {
         console.error(e);
@@ -26,8 +30,31 @@ function* watchLogin(){
     yield takeEvery(LOG_IN_REQUEST, login);
 }
 
+function signUpAPI(data){
+    return axios.post('account/sign_up', data);
+}
+
+function* signUp(action){
+    try {
+        const result = yield call(signUpAPI, action.data);
+        yield put({
+            type : SIGN_UP_SUCCESS
+        })
+    } catch (e) {
+        yield put({
+            type : SIGN_UP_FAILURE,
+            error: err.response.data,
+        })
+    }
+}
+
+function* watchSignUp(){
+    yield takeLatest(SIGN_UP_REQUEST, signUp);
+}
+
 export default function* userSaga(){
     yield all([
         fork(watchLogin),
+        fork(watchSignUp),
     ]);
 }

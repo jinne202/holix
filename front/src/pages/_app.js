@@ -1,7 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
 import '../styles/global.css';
-import Scrollbar from 'react-smooth-scrollbar';
 import wrapper from '../store/configureStore';
 
 const Holix = ({ Component }) => {
@@ -11,14 +10,9 @@ const Holix = ({ Component }) => {
         <title>HOLIX</title>
       </Head>
       <div>
-        <Scrollbar style={{height : "100vh"}}
-          damping={0.08}
-          thumbMinSize={40}
-        >
-          <div>
+            <div style={{height : "100vh"}}>
             <Component />
             </div>
-        </Scrollbar>
       </div>
     </>
   );

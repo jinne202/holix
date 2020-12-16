@@ -1,7 +1,10 @@
 import React, { useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
+import Fade from 'react-reveal/Fade';
 import useInput from '../hooks/useInput';
 import Checkbox from './Checkbox';
+import { useDispatch, useSelector } from 'react-redux';
+import { SIGN_UP_REQUEST } from '../reducers/userReducer';
 
 export const emailCheckRgx = (email) => {
     const emailCheckRegex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
@@ -14,29 +17,31 @@ export const passwordCheckRgx = (password) => {
     return passwordCheckRegex.test(password);
 }
 
-export const userNameCheckRgx = (userName) => {
-    const userNameCheckRegex = /^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣]{2,10}$/;
-    return userNameCheckRegex.test(userName);
+export const nicknameCheckRgx = (nickname) => {
+    const nicknameCheckRegex = /^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣]{2,10}$/;
+    return nicknameCheckRegex.test(nickname);
 }
 
 const RegisterForm = () => {
-    const [userName, onChangeUserName] = useInput('');
+    const dispatch = useDispatch();
+
+    const [nickname, onChangeNickname] = useInput('');
     const [email, onChangeEmail] = useInput('');
     const [password, onChangePassword] = useInput('');
     const [passwordCheck, setPasswordCheck] = useState('');
     const [passwordError, setPasswordError] = useState(false);
-    const [focusUserName, setFocusUserName] = useState(false);
+    const [focusNickname, setFocusNickname] = useState(false);
     const [focusEmail, setFocusEmail] = useState(false);
     const [focusPassword, setFocusPassword] = useState(false);
     const [focusPasswordCheck, setFocusPasswordCheck] = useState(false);
     const [check, setCheck] = useState(false);
 
-    const onFocusInputUserName = () => {
-        setFocusUserName(true);
+    const onFocusInputNickname = () => {
+        setFocusNickname(true);
     }
 
-    const onBlurInputUserName = () => {
-        setFocusUserName(false);
+    const onBlurInputNickname = () => {
+        setFocusNickname(false);
     }
 
     const onFocusInputEmail = () => {
@@ -71,19 +76,23 @@ const RegisterForm = () => {
     const onSubmitForm = useCallback((e) => {
         e.preventDefault();
         if (!isEveryValid()) {
-            return;
+            return setPasswordError(true);
         }
         console.log({
-            email, password, userName
+            email, password, nickname
         });
-    }, [email, password, userName]);
+        return dispatch({
+            type : SIGN_UP_REQUEST,
+            data : { email, password, nickname },
+        })
+    }, [email, password, nickname, passwordCheck, check]);
     
     const onChange = (e) => {
         setCheck(e.target.checked);
     };
 
     const isEveryValid = () => {
-        return emailCheckRgx(email) && passwordCheckRgx(password) && (passwordError === false) && userNameCheckRgx(userName) && (check === true)
+        return emailCheckRgx(email) && passwordCheckRgx(password) && (password === passwordCheck) && nicknameCheckRgx(nickname) && (check === true)
     }
 
     const buttonValid = isEveryValid();
@@ -91,12 +100,13 @@ const RegisterForm = () => {
     return (
         <RegisterWrapper>
         <form onSubmit={onSubmitForm}>
-            <UserNameWrapper>
+            <Fade bottom duration={500} delay={100} distance={"10%"}>
+            <NicknameWrapper>
                 <SubTitle>UserName</SubTitle>
-                <LoginInput type="text" onFocus={onFocusInputUserName} onBlur={onBlurInputUserName} name="user-name" value={userName} onChange={onChangeUserName} required/>
-                <LoginBar focus={focusUserName}/>
+                <LoginInput type="text" onFocus={onFocusInputNickname} onBlur={onBlurInputNickname} name="user-name" value={nickname} onChange={onChangeNickname} required/>
+                <LoginBar focus={focusNickname}/>
                 <SubLink>HMMMMMMMM</SubLink>
-            </UserNameWrapper>
+            </NicknameWrapper>
             <EmailWrapper>
                 <SubTitle>Email</SubTitle>
                 <LoginInput type="text" onFocus={onFocusInputEmail} onBlur={onBlurInputEmail} name="user-email" value={email} onChange={onChangeEmail} required/>
@@ -109,25 +119,30 @@ const RegisterForm = () => {
                 <LoginBar focus={focusPassword}/>
                 <SubLink>HMMMMMMMM</SubLink>
             </PasswordWrapper>
+            </Fade>
+            <Fade bottom duration={500} delay={100} distance={"10%"}>
             <PasswordCheckWrapper>
                 <SubTitle>Password Check</SubTitle>
                 <LoginInput type="password" onFocus={onFocusInputPasswordCheck} onBlur={onBlurInputPasswordCheck} name="user-password-check" value={passwordCheck} onChange={onChangePasswordCheck} required/>
                 <LoginBar focus={focusPasswordCheck}/>
             <SubLink>{passwordError ? "비밀번호가 일치하지 않습니다" : "HMMMMMMMM"}</SubLink>
             </PasswordCheckWrapper>
-
+            </Fade>
             {/* 체크박스 일단! 넣어놓기 여기 손보기*/}
+            <Fade bottom duration={500} delay={100} distance={"10%"}>
             <CheckboxWrapper>
                 <Checkbox onChange={onChange} checked={check}/>
             </CheckboxWrapper>
+            </Fade>
             {/* 체크박스 일단! 넣어놓기 여기 손보기 */}
-
+            <Fade duration={500} delay={500} distance={"10%"}>
             <LoginButton type="submit" check={buttonValid}>
                 <LoginBtnText check={buttonValid}>OK</LoginBtnText>
                 <svg width="100" height="97" viewBox="0 0 100 97" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <ButtonPath d="M65.1669 8.16083L65.2188 8.18683L65.2752 8.20026L81.7799 12.1262L88.5122 27.6984L88.5352 27.7517L88.5698 27.7983L98.6896 41.4147L93.8372 57.6712L93.8206 57.7268L93.8172 57.7847L92.8169 74.7204L78.6504 84.0545L78.6019 84.0864L78.562 84.1286L66.9097 96.4591L50.0576 94.5033L50 94.4966L49.9424 94.5033L33.0903 96.4591L21.438 84.1286L21.3981 84.0864L21.3497 84.0545L7.18308 74.7204L6.18278 57.7847L6.17936 57.7268L6.16276 57.6712L1.3104 41.4147L11.4302 27.7983L11.4648 27.7517L11.4878 27.6984L18.2201 12.1262L34.7248 8.20026L34.7812 8.18683L34.8331 8.16083L50 0.559284L65.1669 8.16083Z" check={buttonValid}/>
                 </svg>
             </LoginButton>
+            </Fade>
         </form>
         </RegisterWrapper>
     )
@@ -205,7 +220,7 @@ const LoginBar = styled.span`
     `}
 `
 
-const UserNameWrapper = styled.div`
+const NicknameWrapper = styled.div`
 `
 
 const EmailWrapper = styled.div`

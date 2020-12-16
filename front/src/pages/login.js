@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import Link from 'next/link';
-import AppLayout from '../components/AppLayout';
+import Fade from 'react-reveal/Fade';
+import AppLayout from "../components/layout/AppLayout";
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
 
@@ -40,7 +41,9 @@ const Login = () => {
                     <SubTitle onClick={handleClick} active={active === 1} id={1}>Login</SubTitle>
                     </Link>
                 </LoginTab>
+                <Fade bottom duration={500} distance={"30%"}>
                 <LoginTitle>Login</LoginTitle>
+                </Fade>
             </LoginLeftWrapper>
             <LoginRightWrapper>
                 {contents()}

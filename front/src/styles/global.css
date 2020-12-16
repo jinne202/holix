@@ -39,17 +39,23 @@ ul, li {
 .scrollbar-track-x {
   display: none;
 }
+
+.scrollbar-track {
+  z-index : 4!important;
+}
+
 .scrollbar-track .scrollbar-thumb {
   background: black;
   transition: background linear;
-  z-index: 4!important;
+  z-index: 6!important;
 }
 
 .scrollbar-track-y, .scrollbar-thumb {
   width: 6px!important;
 }
+
 @media (max-width: 450px) and (max-height: 823px) and (orientation: portrait) {
   .scrollbar-track-y, .scrollbar-thumb {
-    width: 3px!important;
+    width: 6px!important;
   }
 }

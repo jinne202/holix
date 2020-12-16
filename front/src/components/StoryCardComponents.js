@@ -95,7 +95,7 @@ const StoryTitle = styled.p`
     position: absolute;
     color: #fff;
     z-index: 2;
-    margin : 0 0 0 20px;
+    margin : 0 20px 0 20px;
     transition: opacity 0.2s, transform 0.7s;
     bottom: 40px;
     letter-spacing: 1px;
