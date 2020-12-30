@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 import DesktopNav from './DesktopNav';
 import MobileNav from './MobileNav';
 import useWindowSize from '../../hooks/useWindowSize';
-import Menubar from './Menubar';
 
 const AppLayout = ({ children }) => {
 
@@ -27,10 +26,26 @@ const AppLayout = ({ children }) => {
         }
     }, [windowSize]);
 
-    const ScrollWrapper = useRef();
+    // !-- HEADER 높이
+    const [header, setHeader] = useState(false);
+    const listenScrollEvent = event => {
+        if (window.scrollY < 199) {
+        return setHeader(false);
+        } else if (window.scrollY > 200) {
+        return setHeader(true);
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener("scroll", listenScrollEvent);
+        return () => window.removeEventListener("scroll", listenScrollEvent);
+    }, []);
+
+    console.log(header);
+    // !-- HEADER 높이
 
     return (
-        <>  
+        <> 
             <NavWrapper>
             {mobile ? <MobileNav/> : <DesktopNav/>}
             </NavWrapper>
@@ -38,15 +53,9 @@ const AppLayout = ({ children }) => {
             ?
             <div></div>
             :
-            <Scrollbar style={{height : "100vh"}}
-                damping={0.08}
-                thumbMinSize={40}
-                ref={ScrollWrapper}
-            >
-            <ContentWrapper>
+            <ContentWrapper header={header}>
                 {children}
             </ContentWrapper>
-            </Scrollbar>
             }
         </>
 
@@ -56,17 +65,17 @@ const AppLayout = ({ children }) => {
 const NavWrapper = styled.div`
     width : 100%;
     position : fixed;
-    z-index : 3;
+    z-index : 10;
     top : 0;
     left : 0;
     background-color : white;
 `
 
 const ContentWrapper = styled.div`
-    padding : 82px 79px 0;
     width : 100%;
     position : relative;
     top : 0;
+    padding : 82px 0 0 0;
 `
 
 export default AppLayout;

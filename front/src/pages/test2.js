@@ -1,73 +1,69 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
-import Scrollbar from 'react-smooth-scrollbar';
+import AppLayout from '../components/layout/AppLayout';
 
 
 const testt = () => {
 
-  const [header, setHeader] = useState(false);
-
-  const listenScrollEvent = event => {
-    if (window.scrollY < 140) {
-      return setHeader(false);
-    } else if (window.scrollY > 140) {
-      return setHeader(true);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", listenScrollEvent);
-    return () => window.removeEventListener("scroll", listenScrollEvent);
-  }, []);
-
-  console.log(header);
-
   return (
-    <WrappAll>
-      <MenuWrapper header={header}>
-        <p>메뉴 높이 확인하기</p>
-      </MenuWrapper>
-      <div style={{width : "200px", margin : "0 auto", padding : "82px 0 0 0"}}>
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-      </div>
-      <div style={{width : "200px", margin : "0 auto"}}>
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-      </div>
-      <div style={{width : "200px", margin : "0 auto"}}>
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-      </div>
-    </WrappAll>
+    <AppLayout>
+      <TestWrapper>
+        <Cursor></Cursor>
+        <CursorFollower></CursorFollower>
+      </TestWrapper>
+    </AppLayout>
   );
 }
 
-const WrappAll = styled.div`
-  width : 100%;
-  border : 1px solid blue;
-`
-
-const MenuWrapper = styled.div`
+const TestWrapper = styled.div`
+  height : 3000px;
   background-color : black;
-  height : 82px;
-  width : 100%;
-  position: fixed;
-  overflow: hidden;
-  top : 0;
-  left : 0;
-  z-index : 99;
-  transition: 1s ease all;
-  -moz-transition: 1s ease all;
-  -webkit-transition: 1s ease all;
-
-  & > p {
-    color : white;
-    margin : 0;
-  }
-
-  ${props =>
-    props.header === true &&
-    css`
-        height : 40px;
-    `}
+  cursor: none;
 `
+
+const Cursor = styled.div`
+  position: absolute;
+  background: white;
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  z-index: 1;
+  transition: 0.5s cubic-bezier(0.75, -1.27, 0.3, 2.33) transform,
+      0.2s cubic-bezier(0.75, -1.27, 0.3, 2.33) opacity;
+  user-select: none;
+  pointer-events: none;
+  transform: scale(0.8);
+
+  &:before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    background-image: url("http://mirkozeppieri.emanuelepapale.com/wp-content/uploads/2018/07/project-hover-cursor.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 100%;
+    opacity: 0;
+  }
+`
+
+const CursorFollower = styled.div`
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  z-index: 1;
+  transition: 0.6s cubic-bezier(0.75, -1.27, 0.3, 2.33) transform,
+      0.4s cubic-bezier(0.75, -1.27, 0.3, 2.33) opacity;
+  user-select: none;
+  pointer-events: none;
+  transform: translate(4px, 4px);
+`
+
 
 export default testt;

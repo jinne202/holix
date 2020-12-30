@@ -30,32 +30,38 @@ const Login = () => {
 
     return (
         <AppLayout>
-            <Line></Line>
-            <LoginWrapper>
-            <LoginLeftWrapper>
-                <LoginTab>
-                    <Link href="/register">
-                    <SubTitleFirst onClick={handleClick} active={active === 0} id={0}>Register</SubTitleFirst>
-                    </Link>
-                    <Link href="/login">
-                    <SubTitle onClick={handleClick} active={active === 1} id={1}>Login</SubTitle>
-                    </Link>
-                </LoginTab>
-                <Fade bottom duration={500} distance={"30%"}>
-                <LoginTitle>Login</LoginTitle>
-                </Fade>
-            </LoginLeftWrapper>
-            <LoginRightWrapper>
-                {contents()}
-            </LoginRightWrapper>
-            </LoginWrapper>
+            <LayoutWrapper>
+                <Line></Line>
+                <LoginWrapper>
+                <LoginLeftWrapper>
+                    <LoginTab>
+                        <Link href="/register">
+                        <SubTitleFirst onClick={handleClick} active={active === 0} id={0}>Register</SubTitleFirst>
+                        </Link>
+                        <Link href="/login">
+                        <SubTitle onClick={handleClick} active={active === 1} id={1}>Login</SubTitle>
+                        </Link>
+                    </LoginTab>
+                    <Fade bottom duration={500} distance={"30%"}>
+                    <LoginTitle>Login</LoginTitle>
+                    </Fade>
+                </LoginLeftWrapper>
+                <LoginRightWrapper>
+                    {contents()}
+                </LoginRightWrapper>
+                </LoginWrapper>
+            </LayoutWrapper>
         </AppLayout>
     )
 }
 
+const LayoutWrapper = styled.div`
+    padding : 0 79px;
+    margin : 96px 0 0 0;
+`
+
 const Line = styled.div`
     border-bottom : 1px solid black;
-    margin : 96px 0 0 0;
 `
 
 const LoginWrapper = styled.div`

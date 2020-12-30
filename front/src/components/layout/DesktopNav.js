@@ -18,7 +18,7 @@ const DesktopNav = () => {
     // !-- HEADER 높이
     const [header, setHeader] = useState(false);
     const listenScrollEvent = event => {
-        if (window.scrollY < 200) {
+        if (window.scrollY < 199) {
         return setHeader(false);
         } else if (window.scrollY > 200) {
         return setHeader(true);
@@ -37,7 +37,7 @@ const DesktopNav = () => {
         <>
             <MenuWrapper header={header}>
                 <LeftMenu>
-                    <ul>
+                    <LeftMenuUl header={header}>
                         <Link href="/story">
                         <MenuList active={router.pathname == "/story" ? true : false}>Project<MenuHoverCircle>{svgIcon}</MenuHoverCircle></MenuList>
                         </Link>
@@ -47,19 +47,19 @@ const DesktopNav = () => {
                         <MenuList>Workshop<MenuHoverCircle>{svgIcon}</MenuHoverCircle></MenuList>
                         <MenuList>Jobs<MenuHoverCircle>{svgIcon}</MenuHoverCircle></MenuList>
                         <MenuList>Store<MenuHoverCircle>{svgIcon}</MenuHoverCircle></MenuList>
-                    </ul>
+                    </LeftMenuUl>
                 </LeftMenu>
                 <LogoWrapper>
-                    <Logo>
+                    <Logo header={header}>
                         Holix
-                        <LogoIcon>
+                        <LogoIcon header={header}>
                             {svgIcon}
                         </LogoIcon>
                     </Logo>
                 </LogoWrapper>
                 <RightMenu>
                     {me ?
-                        <AfterLoginWrapper>
+                        <AfterLoginWrapper header={header}>
                             <LoginUserName>임시네임^,^</LoginUserName>
                             <LoginUserPhoto>
                                 <img src={dummyUserImg} alt="유저이미지"/>
@@ -67,8 +67,8 @@ const DesktopNav = () => {
                         </AfterLoginWrapper>
                     :
                         <BeforeLoginWrapper>
-                            <LoginText>Are you a holixer?</LoginText>
-                            <LoginWrapper>
+                            <LoginText header={header}>Are you a holixer?</LoginText>
+                            <LoginWrapper header={header}>
                                 <ul>
                                 <Link href="/register"><LoginMenuList>Register</LoginMenuList></Link>
                                     <Link href="/login"><LoginMenuList>Login</LoginMenuList></Link>
@@ -76,7 +76,7 @@ const DesktopNav = () => {
                             </LoginWrapper>
                         </BeforeLoginWrapper>
                     }
-                    <ProjectBtn>
+                    <ProjectBtn header={header}>
                         Project Submit
                     </ProjectBtn>
                 </RightMenu>
@@ -91,11 +91,10 @@ const MenuWrapper = styled.div`
     display : flex;
     font-family: 'Noto Sans KR', sans-serif;
     padding : 0 79px;
-    border : 1px solid blue;
 
-    transition: 1s ease all;
-    -moz-transition: 1s ease all;
-    -webkit-transition: 1s ease all;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
 
     ${props =>
     props.header === true &&
@@ -107,11 +106,20 @@ const MenuWrapper = styled.div`
 const LeftMenu = styled.div`
     margin : 0;
     width : 45%;
+`
 
-    & > ul {
-        padding : 32px 0 0 0;
-        margin : 0;
-    }
+const LeftMenuUl = styled.ul`
+    padding : 32px 0 0 0;
+    margin : 0;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+
+    ${props =>
+    props.header === true &&
+    css`
+        padding : 19px 0 0 0;
+    `}
 `
 
 const bounce = keyframes`
@@ -140,23 +148,23 @@ const MenuHoverCircle = styled.span`
     right : -25px;
     top : 1px;
     opacity : 0;
-    transition: 0.3s ease all;
-    -moz-transition: 0.3s ease all;
-    -webkit-transition: 0.3s ease all;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
 `
 
 const MenuList = styled.li`
     font-size : 18px;
     font-weight : 700;
     display : inline-block;
-    margin : 0 50px 0 0;
+    margin : 0 48px 0 0;
     line-height : 100%;
     color : black;
     cursor : pointer;
     position : relative;
-    transition: 0.3s ease all;
-    -moz-transition: 0.3s ease all;
-    -webkit-transition: 0.3s ease all;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
 
     &:hover {
         color : #ff0000;
@@ -193,12 +201,48 @@ const Logo = styled.h1`
     display : block;
     text-align : center;
     position : relative;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+
+    ${props =>
+    props.header === true &&
+    css`
+        font-size : 20px;
+        margin : 18px 0 0;
+    `}
 `
 
 const LogoIcon = styled.span`
     position : absolute;
     right : -18px;
-    top : -12px;
+    top : 12px;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+    width : 16px;
+    height : 16px;
+
+    & > svg {
+            width : 100%;
+            position : absolute;
+            top : 0;
+            left : 0;
+        }
+
+    ${props =>
+    props.header === true &&
+    css`
+        width : 16px;
+        height : 16px;
+        right : 3px;
+        top : 3px;
+        position : absolute;
+
+        & > svg {
+            width : 100%;
+        }
+    `}
 `
 
 const RightMenu = styled.div`
@@ -213,6 +257,16 @@ const BeforeLoginWrapper = styled.div`
 const AfterLoginWrapper = styled.div`
     display : flex;
     margin : 21px 35px 0 0;
+
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+
+    ${props =>
+    props.header === true &&
+    css`
+        margin : 8px 35px 0 0;
+    `}
 `
 
 const LoginUserName = styled.p`
@@ -244,6 +298,16 @@ const LoginText = styled.p`
     line-height : 100%;
     margin : 31px 13px 0 0;
     display : inline-block;
+
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+
+    ${props =>
+    props.header === true &&
+    css`
+        margin : 20px 13px 0 0;
+    `}
 `
 
 const LoginWrapper = styled.div`
@@ -255,6 +319,16 @@ const LoginWrapper = styled.div`
         display : flex;
         padding : 0;
     }
+
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+
+    ${props =>
+    props.header === true &&
+    css`
+        margin : 20px 22px 0 0;
+    `}
 `
 
 const LoginMenuList = styled.li`
@@ -278,6 +352,16 @@ const ProjectBtn = styled.div`
     text-align : center;
     font-weight : 700;
     cursor : pointer;
+
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+
+    ${props =>
+    props.header === true &&
+    css`
+        margin : 8px 0 0;
+    `}
 `
 
 export default DesktopNav;

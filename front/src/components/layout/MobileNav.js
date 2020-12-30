@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Link from 'next/link';
 
 import { showSidebarRequest } from '../../reducers/layoutReducer';
@@ -34,26 +34,44 @@ const MobileNav = () => {
         dispatch(showSidebarRequest());
     };
 
+    // !-- HEADER 높이
+    const [header, setHeader] = useState(false);
+    const listenScrollEvent = event => {
+        if (window.scrollY < 199) {
+        return setHeader(false);
+        } else if (window.scrollY > 200) {
+        return setHeader(true);
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener("scroll", listenScrollEvent);
+        return () => window.removeEventListener("scroll", listenScrollEvent);
+    }, []);
+
+    console.log(header);
+    // !-- HEADER 높이
+
     return (
         <>
         {showSidebar ? <Menubar style={{zIndex : "10"}}></Menubar> : <></>}
-        <MenuWrapper>
+        <MenuWrapper header={header}>
             <LeftMenu>
-                <IconWrapper onClick={handleClickSidebar}>
+                <IconWrapper onClick={handleClickSidebar} header={header}>
                     {hamburgerIcon}
                 </IconWrapper>
             </LeftMenu>
             <LogoWrapper>
-                <Logo>
+                <Logo header={header}>
                     Holix
-                    <LogoIcon>
+                    <LogoIcon header={header}>
                         {svgIcon}
                     </LogoIcon>
                 </Logo>
             </LogoWrapper>
             <RightMenu>
                     {me ?
-                        <AfterLoginWrapper>
+                        <AfterLoginWrapper header={header}>
                             <LoginUserName>임시네임^,^</LoginUserName>
                             <LoginUserPhoto>
                                 <img src={dummyUserImg} alt="유저이미지"/>
@@ -61,16 +79,15 @@ const MobileNav = () => {
                         </AfterLoginWrapper>
                     :
                         <BeforeLoginWrapper>
-                            <LoginText>Are you a holixer?</LoginText>
-                            <LoginWrapper>
+                            <LoginWrapper header={header}>
                                 <ul>
                                 <Link href="/register"><LoginMenuList>Register</LoginMenuList></Link>
-                                    <Link href="/login"><LoginMenuList>Login</LoginMenuList></Link>
+                                    <Link href="/login"><LoginMenuListRight>Login</LoginMenuListRight></Link>
                                 </ul>
                             </LoginWrapper>
                         </BeforeLoginWrapper>
                     }
-                    <ProjectBtn>
+                    <ProjectBtn header={header}>
                         Project Submit
                     </ProjectBtn>
                 </RightMenu>
@@ -85,17 +102,38 @@ const MenuWrapper = styled.div`
     font-family: 'Noto Sans KR', sans-serif;
     padding : 0 79px;
     justify-content: space-between;
+
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+
+    ${props =>
+    props.header === true &&
+    css`
+        height : 56px;
+    `}
 `
 
 const LeftMenu = styled.div`
     margin : 0;
     display : block;
+    width : 40%;
 `
 
 const IconWrapper = styled.div`
     display : inline-block;
     padding : 32px 0 0 0;
     cursor: pointer;
+
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+
+    ${props =>
+    props.header === true &&
+    css`
+        padding : 18px 0 0 0;
+    `}
 `
 
 const LogoWrapper = styled.div`
@@ -111,17 +149,54 @@ const Logo = styled.h1`
     display : block;
     text-align : center;
     position : relative;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+
+    ${props =>
+    props.header === true &&
+    css`
+        font-size : 20px;
+        margin : 18px 0 0;
+    `}
 `
 
 const LogoIcon = styled.span`
     position : absolute;
     right : -18px;
-    top : -12px;
+    top : 12px;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+    width : 16px;
+    height : 16px;
+
+    & > svg {
+            width : 100%;
+            position : absolute;
+            top : 0;
+            left : 0;
+        }
+
+    ${props =>
+    props.header === true &&
+    css`
+        width : 16px;
+        height : 16px;
+        right : 3px;
+        top : 3px;
+        position : absolute;
+
+        & > svg {
+            width : 100%;
+        }
+    `}
 `
 
 const RightMenu = styled.div`
     display : flex;
     justify-content : flex-end;
+    width : 40%;
 `
 
 const BeforeLoginWrapper = styled.div`
@@ -131,8 +206,24 @@ const AfterLoginWrapper = styled.div`
     display : flex;
     margin : 21px 35px 0 0;
 
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+
+    ${props =>
+    props.header === true &&
+    css`
+        margin : 8px 35px 0 0;
+    `}
+
     @media (max-width: 1000px) {
         margin : 21px 0 0 0;
+
+        ${props =>
+        props.header === true &&
+        css`
+            margin : 8px 0 0 0;
+        `}
     }
 `
 
@@ -160,17 +251,6 @@ const LoginUserPhoto = styled.div`
     }
 `
 
-const LoginText = styled.p`
-    font-size : 16px;
-    line-height : 100%;
-    margin : 31px 13px 0 0;
-    display : inline-block;
-
-    @media (max-width: 1000px) {
-        display : none;
-    }
-`
-
 const LoginWrapper = styled.div`
     padding : 0;
     display : inline-block;
@@ -181,8 +261,24 @@ const LoginWrapper = styled.div`
         padding : 0;
     }
 
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+
+    ${props =>
+    props.header === true &&
+    css`
+        margin : 20px 22px 0 0;
+    `}
+
     @media (max-width: 1000px) {
         margin : 31px 0 0 0;
+
+        ${props =>
+        props.header === true &&
+        css`
+            margin : 20px 0 0 0;
+        `}
     }
 `
 
@@ -197,9 +293,7 @@ const LoginMenuList = styled.li`
 `
 
 const LoginMenuListRight = styled(LoginMenuList)`
-    @media (max-width: 1000px) {
-        margin : 0;
-    }
+    margin : 0;
 `
 
 const ProjectBtn = styled.div`
@@ -213,6 +307,16 @@ const ProjectBtn = styled.div`
     text-align : center;
     font-weight : 700;
     cursor : pointer;
+
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+
+    ${props =>
+    props.header === true &&
+    css`
+        margin : 8px 0 0;
+    `}
 
     @media (max-width: 1000px) {
         display : none;
