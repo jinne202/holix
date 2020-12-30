@@ -80,7 +80,7 @@ const TestGrid = styled.div`
 const SortStyle = styled.div`
   position : fixed;
   width : 100%;
-  overflow: hidden;
+  overflow: visible;
   z-index : 39;
   transition: 0.2s ease all;
   -moz-transition: 0.2s ease all;

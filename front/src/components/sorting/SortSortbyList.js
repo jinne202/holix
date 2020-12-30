@@ -2,21 +2,21 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
 
-import { showCategoryRequest, hideCategoryRequest } from '../../reducers/layoutReducer';
+import { showSortCategoryRequest, hideSortCategoryRequest } from '../../reducers/layoutReducer';
 
 const SortSortbyList = ({ list, selected, onSelectedChange }) => {
 
     const arrowIcon = <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="9.5" fill="white" stroke="#000000"/><path d="M6.25 8.3335L10.2083 12.9168L14.1667 8.3335" stroke="#000000" strokeLinecap="round" strokeLinejoin="round"/></svg>
 
     const dispatch = useDispatch();
-    const { showCategory } = useSelector((state) => state.layoutReducer);
+    const { showSortCategory } = useSelector((state) => state.layoutReducer);
     
-    const hanldeClickCategory = () => {
-        dispatch(showCategoryRequest());
+    const hanldeClickSortCategory = () => {
+        dispatch(showSortCategoryRequest());
     }
 
-    const handleClickCategoryClose = () => {
-        dispatch(hideCategoryRequest());
+    const handleClickSortCategoryClose = () => {
+        dispatch(hideSortCategoryRequest());
     }
 
     const SortbyListOptions = list.map(option => {
@@ -33,15 +33,13 @@ const SortSortbyList = ({ list, selected, onSelectedChange }) => {
 
     return (
         <SortCategoryWrapper>
-            <SortCategoryMiddle 
-                // onClick={hanldeClickCategory}
-            >
+            <SortCategoryMiddle onClick={hanldeClickSortCategory}>
                 <SortbyTitle>{selected.korLabel}<IconWrapper>{arrowIcon}</IconWrapper></SortbyTitle>
             </SortCategoryMiddle>
             {/* <LineTwo></LineTwo> */}
-            <SlideWrapper open={showCategory}>
-            <SortCategoryBottom>
-                <SortbyDetail>
+            <SlideWrapper>
+            <SortCategoryBottom show={showSortCategory}>
+                <SortbyDetail onClick={handleClickSortCategoryClose}>
                     {SortbyListOptions}
                 </SortbyDetail>
             </SortCategoryBottom>
@@ -99,22 +97,22 @@ const IconWrapper = styled.span`
 `
 
 const SlideWrapper = styled.div`
-    /* max-height: 0; */
-	overflow: hidden;
-    transition: 0.5s ease all;
-    -moz-transition: 0.5s ease all;
-    -webkit-transition: 0.5s ease all;
-
-    /* ${props =>
-    props.open === true &&
-    css`
-        max-height: 750px;
-    `} */
 `
 
 const SortCategoryBottom = styled.div`
     width : 100%;
     display : flex;
+    max-height : 0;
+    overflow : hidden;
+    transition: 0.5s ease all;
+    -moz-transition: 0.5s ease all;
+    -webkit-transition: 0.5s ease all;
+
+    ${props =>
+    props.show === true &&
+    css`
+        max-height : 300px;
+    `}
 `
 
 const SortbyDetail = styled.ul`

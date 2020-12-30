@@ -137,7 +137,6 @@ const SortWrapper = () => {
 
 const SortWrapperAll = styled.div`
     position : relative;
-    border : 1px solid blue;
 `
 
 const SortCategoryWrapper = styled.div`
@@ -155,8 +154,7 @@ const SortLeftWrapper = styled.div`
     left : 0;
     display : flex;
     z-index : 50;
-    border : 1px solid green;
-    height : 500px;
+    height : 400px;
 `
 
 

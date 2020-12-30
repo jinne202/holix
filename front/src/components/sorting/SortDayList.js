@@ -100,13 +100,11 @@ const IconWrapper = styled.span`
 `
 
 const SlideWrapper = styled.div`
-    border : 1px solid red;
 `
 
 const SortCategoryBottom = styled.div`
     width : 100%;
     display : flex;
-    border : 1px solid blue;
     max-height : 0;
     overflow : hidden;
     transition: 0.5s ease all;
