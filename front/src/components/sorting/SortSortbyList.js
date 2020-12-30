@@ -51,7 +51,8 @@ const SortSortbyList = ({ list, selected, onSelectedChange }) => {
 }
 
 const SortCategoryWrapper = styled.div`
-    width : 14.2%;
+    display : inline-block;
+    width : 250px;
 `
 
 // const Line = styled.div`
@@ -79,9 +80,7 @@ const SortbyTitle = styled.div`
     cursor : pointer;
     padding : 90px 0 0 79px;
     position : relative;
-    border-bottom : 1px solid black;
     z-index : 12;
-    background-color : white;
 `
 
 const IconWrapper = styled.span`
@@ -122,6 +121,7 @@ const SortbyDetail = styled.ul`
     width : 100%;
     padding : 0;
     margin : 25px 0 0;
+    background-color : white;
 `
 
 const DetailListSort = styled.li`

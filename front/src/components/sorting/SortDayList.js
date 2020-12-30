@@ -2,22 +2,24 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
 
-import { showCategoryRequest, hideCategoryRequest } from '../../reducers/layoutReducer';
+import { showDayCategoryRequest, hideDayCategoryRequest } from '../../reducers/layoutReducer';
 
 const SortDayList = ({ list, selected, onSelectedChange }) => {
 
     const arrowIcon = <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="9.5" fill="white" stroke="#000000"/><path d="M6.25 8.3335L10.2083 12.9168L14.1667 8.3335" stroke="#000000" strokeLinecap="round" strokeLinejoin="round"/></svg>
 
     const dispatch = useDispatch();
-    const { showCategory } = useSelector((state) => state.layoutReducer);
+    const { showDayCategory } = useSelector((state) => state.layoutReducer);
     
-    const hanldeClickCategory = () => {
-        dispatch(showCategoryRequest());
+    const hanldeClickDayCategory = () => {
+        dispatch(showDayCategoryRequest());
     }
 
-    const handleClickCategoryClose = () => {
-        dispatch(hideCategoryRequest());
+    const handleClickDayCategoryClose = () => {
+        dispatch(hideDayCategoryRequest());
     }
+
+    console.log(showDayCategory, "SHOWDAYCATEGORY");
 
     const DayListOptions = list.map(option => {
         return (
@@ -32,15 +34,16 @@ const SortDayList = ({ list, selected, onSelectedChange }) => {
 
     return (
         <SortCategoryWrapper>
-            <SortCategoryMiddle 
-                // onClick={hanldeClickCategory}
-            >
-                <SortbyTitle>{selected.label}<IconWrapper>{arrowIcon}</IconWrapper></SortbyTitle>
+            <SortCategoryMiddle  onClick={hanldeClickDayCategory}>
+                <SortbyTitle>
+                    {selected.label}
+                    <IconWrapper>{arrowIcon}</IconWrapper>
+                </SortbyTitle>
             </SortCategoryMiddle>
             {/* <LineTwo></LineTwo> */}
             <SlideWrapper>
-            <SortCategoryBottom>
-                <SortbyDetail>
+            <SortCategoryBottom show={showDayCategory}>
+                <SortbyDetail onClick={handleClickDayCategoryClose}>
                     {DayListOptions}
                 </SortbyDetail>
             </SortCategoryBottom>
@@ -50,7 +53,7 @@ const SortDayList = ({ list, selected, onSelectedChange }) => {
 }
 
 const SortCategoryWrapper = styled.div`
-    width : 25.3%;
+    width : 250px;
 `
 
 // const Line = styled.div`
@@ -78,9 +81,7 @@ const SortbyTitle = styled.div`
     cursor : pointer;
     padding : 90px 0 0 0;
     position : relative;
-    border-bottom : 1px solid black;
     z-index : 12;
-    background-color : white;
 `
 
 const IconWrapper = styled.span`
@@ -99,28 +100,31 @@ const IconWrapper = styled.span`
 `
 
 const SlideWrapper = styled.div`
-    /* max-height: 0; */
-	overflow: hidden;
-    transition: 0.5s ease all;
-    -moz-transition: 0.5s ease all;
-    -webkit-transition: 0.5s ease all;
-
-    /* ${props =>
-    props.open === true &&
-    css`
-        max-height: 750px;
-    `} */
+    border : 1px solid red;
 `
 
 const SortCategoryBottom = styled.div`
     width : 100%;
     display : flex;
+    border : 1px solid blue;
+    max-height : 0;
+    overflow : hidden;
+    transition: 0.5s ease all;
+    -moz-transition: 0.5s ease all;
+    -webkit-transition: 0.5s ease all;
+
+    ${props =>
+    props.show === true &&
+    css`
+        max-height : 300px;
+    `}
 `
 
 const SortbyDetail = styled.ul`
     width : 100%;
     padding : 0;
     margin : 25px 0 0;
+    background-color : white;
 `
 
 const DetailListDay = styled.li`

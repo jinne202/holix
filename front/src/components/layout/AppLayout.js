@@ -65,7 +65,7 @@ const AppLayout = ({ children }) => {
 const NavWrapper = styled.div`
     width : 100%;
     position : fixed;
-    z-index : 10;
+    z-index : 100;
     top : 0;
     left : 0;
     background-color : white;
