@@ -28,7 +28,7 @@ const MobileNav = () => {
 
     const dispatch = useDispatch();
     const { showSidebar } = useSelector((state) => state.layoutReducer);
-    const { me } = useSelector((state) => state.userReducer);
+    const { myAccountInfo } = useSelector((state) => state.userReducer);
 
     const handleClickSidebar = () => {
         dispatch(showSidebarRequest());
@@ -70,9 +70,9 @@ const MobileNav = () => {
                 </Logo>
             </LogoWrapper>
             <RightMenu>
-                    {me ?
+                    {myAccountInfo ?
                         <AfterLoginWrapper header={header}>
-                            <LoginUserName>임시네임^,^</LoginUserName>
+                            <LoginUserName>{myAccountInfo.nickname }</LoginUserName>
                             <LoginUserPhoto>
                                 <img src={dummyUserImg} alt="유저이미지"/>
                             </LoginUserPhoto>

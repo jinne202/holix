@@ -1,0 +1,51 @@
+﻿<Properties StartupConfiguration="{4349A479-3FA3-41C1-8025-3185E3759C4A}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/components/StoryCardComponents.js">
+    <Files>
+      <File FileName="src/sagas/index.js" Line="11" Column="30" />
+      <File FileName="src/sagas/projectSaga.js" Line="53" Column="2" />
+      <File FileName="src/sagas/userSaga.js" Line="88" Column="62" />
+      <File FileName="src/reducers/layoutReducer.js" />
+      <File FileName="src/reducers/projectReducer.js" />
+      <File FileName="src/reducers/userReducer.js" Line="54" Column="30" />
+      <File FileName="src/pages/posting/[id].js" Line="22" Column="33" />
+      <File FileName="src/components/layout/DesktopNav.js" Line="63" Column="68" />
+      <File FileName="src/pages/story.js" Line="12" Column="33" />
+      <File FileName="src/reducers/index.js" Line="1" Column="1" />
+      <File FileName="src/components/layout/MobileNav.js" Line="75" Column="70" />
+      <File FileName="src/pages/index.js" Line="11" Column="21" />
+      <File FileName="src/components/layout/Menubar.js" Line="1" Column="1" />
+      <File FileName="src/components/StoryCardComponents.js" Line="14" Column="112" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="front" expanded="True">
+            <Node name="front" expanded="True">
+              <Node name="src" expanded="True">
+                <Node name="components" expanded="True">
+                  <Node name="layout" expanded="True" />
+                  <Node name="StoryCardComponents.js" selected="True" />
+                </Node>
+                <Node name="hooks" expanded="True" />
+                <Node name="pages" expanded="True">
+                  <Node name="posting" expanded="True" />
+                </Node>
+                <Node name="reducers" expanded="True" />
+                <Node name="sagas" expanded="True" />
+                <Node name="store" expanded="True" />
+                <Node name="styles" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.front FirstBuild="True" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

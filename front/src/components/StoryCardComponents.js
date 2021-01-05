@@ -11,7 +11,7 @@ const StoryCardComponents = ({ posting }) => {
 
     return (
             <StoryCardWrapper>
-                <Link href = {{ pathname : 'http://hi-holix.com/viewStory.html', query : { id : posting.index } }}>
+                <Link href={{ pathname: 'posting/' + posting.id }}>
                 <StoryCardUI>
                     <StoryCardImgWrapper bottomColor={bottomColor}>
                         {mainImage}
