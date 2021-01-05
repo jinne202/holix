@@ -118,7 +118,7 @@ const SortCategoryBottom = styled.div`
 const SortbyDetail = styled.ul`
     width : 100%;
     padding : 0;
-    margin : 25px 0 0;
+    /* margin : 25px 0 0; */
     background-color : white;
 `
 
@@ -126,7 +126,7 @@ const DetailListSort = styled.li`
     font-size : 18px;
     font-weight : 500;
     line-height : 100%;
-    margin : 0 0 23px 0;
+    margin : 25px 0 0 0;
     cursor: pointer;
     transition: 0.2s ease all;
     -moz-transition: 0.2s ease all;
