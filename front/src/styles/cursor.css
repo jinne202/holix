@@ -1,0 +1,23 @@
+.cursor {
+    z-index : 1000;
+    border-radius : 50%;
+    width : 8px;
+    height : 8px;
+    background-color : black;
+    pointer-events : none;
+    overflow: hidden;
+    transform : translate3d(0, 0, 0);
+    position : fixed;
+  }
+  
+  .cursorFollower {
+    z-index : 1000;
+    border-radius : 50%;
+    width : 40px;
+    height : 40px;
+    border : 1px solid black;
+    pointer-events : none;
+    overflow: hidden;
+    transform : translate3d(0, 0, 0);
+    position : fixed;
+  }
