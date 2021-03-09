@@ -1,0 +1,49 @@
+﻿<Properties StartupConfiguration="{4349A479-3FA3-41C1-8025-3185E3759C4A}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/components/posting/ImagesWrapper.js">
+    <Files>
+      <File FileName="src/pages/posting/editPosting.js" Line="90" Column="18" />
+      <File FileName="src/components/layout/MobileNav.js" Line="27" Column="11" />
+      <File FileName="src/components/posting/SideMenu.js" Line="29" Column="24" />
+      <File FileName="src/components/StoryCardComponents.js" Line="1" Column="27" />
+      <File FileName="src/pages/story.js" Line="5" Column="1" />
+      <File FileName="src/components/layout/DesktopNav.js" Line="7" Column="20" />
+      <File FileName="src/components/posting/ContentsWrapper.js" Line="6" Column="22" />
+      <File FileName="src/components/posting/ImagesWrapper.js" Line="10" Column="27" />
+      <File FileName="src/components/CheckTest.js" Line="1" Column="1" />
+      <File FileName="src/components/LoginForm.js" Line="19" Column="13" />
+      <File FileName="src/pages/index.js" Line="1" Column="1" />
+      <File FileName="src/pages/login.js" Line="26" Column="24" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="front" expanded="True">
+            <Node name="front" expanded="True">
+              <Node name="src" expanded="True">
+                <Node name="components" expanded="True">
+                  <Node name="layout" expanded="True" />
+                  <Node name="posting" expanded="True">
+                    <Node name="ImagesWrapper.js" selected="True" />
+                  </Node>
+                </Node>
+                <Node name="images" expanded="True">
+                  <Node name="editor" expanded="True" />
+                </Node>
+                <Node name="pages" expanded="True">
+                  <Node name="posting" expanded="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.front FirstBuild="True" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

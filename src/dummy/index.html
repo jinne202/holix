@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>holix</title>
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript">
+        function movePostingView(index) {
+            location.href= "viewStory.html?id=" + index;
+        }
+
+        const imageHost = "https://holix.s3.ap-northeast-2.amazonaws.com/image/";
+        $.ajax({
+            url:'http://hi-holix.com:8080/posting/',
+            type:'get',
+            dataType:'json',
+            contentType: "application/json",
+            success:function(pList){
+                var index = 0;
+                pList.forEach(function(posting) {
+                    var storycell = $('<div class = "storycell" onClick="movePostingView(' + posting.index + ')"></div>');
+                    var titleBackGround;
+                    if (posting.titleImage) {
+                        titleBackGround = 'background-image:url(' + imageHost + posting.titleImage + ')';
+                    } else {
+                        titleBackGround = 'background:' + posting.titleColor;
+                    }
+                    storycell.append($('<img class = "thumbnail" style= "' + titleBackGround + '" />'));
+                    var storyInfo = $('<div class = "storyInfo"></div>');
+                    var profileBox = $('<div class = "profileBox"></div>');
+                    var aritcleInfo = $('<div class = "aritcleInfo"></div>');
+                    storycell.append(storyInfo);
+                    storyInfo.append(profileBox);
+                    storyInfo.append(aritcleInfo);
+                    aritcleInfo.append($('<div class = "title">' + posting.title +'</div>'));
+                    aritcleInfo.append($('<div class = "nickname">닉네임</div>'));
+                    console.log(storycell);
+                    if (index % 4 == 0) {
+                        console.log(index);
+                        $('.storytable > tbody').append($('<tr></tr>'));
+                    }
+                    $('.storytable > tbody > tr:last').append($('<td></td>'));
+                    $('.storytable > tbody > tr:last > td:last').append(storycell);
+                    console.log("추가");
+                    index++;
+                });
+            }
+            });
+    </script>
+    <link rel="stylesheet" href="css/main.css?v=0.0001" />
+</head>
+<body>
+    <nav>
+        <img src = "images/logo.png" id = "logoImg" />
+        <div id = "menu">
+            <div class = "menu_r"><a href = "editStory.html" class="btn">프로젝트 제작</a></div>
+            <div class = "menu_r"><a href = "" class="link selected" >스토리</a></div>
+            <div class = "menu_r"><a href = "" class="link">펀딩</a></div>
+            <div class = "menu_r"><a href = "" class="link">세일즈</a></div>
+            <div class = "menu_r"><a href = ""></a></div>
+        </div>
+    </nav>
+    <div id = "contents">
+        <div class = "centerBox">
+            <div class = "blackBox">ZERONINEZ X Portflio</div>
+            <div class = "titleBox">Hi-holix</div>
+        </div>
+        <table border = "0" class = "storytable">
+            <tbody>
+            </tbody>
+        </table>
+</body>
+</html>

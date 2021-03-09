@@ -1,0 +1,9 @@
+node_modules/
+package-lock.json
+.next/
+fornt.sln
+front.mdproj
+src.zip
+front/front.sln
+front/.gitignore
+front/.vs/front/xs/UserPrefs.xml
