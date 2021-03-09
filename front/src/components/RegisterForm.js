@@ -69,8 +69,12 @@ const RegisterForm = () => {
     }
 
     const onChangePasswordCheck = useCallback((e) => {
+        console.log("e.target.value" + e.target.value);
+        console.log("password" + password);
+        console.log("e.target.value !== password)" + (e.target.value !== password));
         setPasswordError(e.target.value !== password);
         setPasswordCheck(e.target.value);
+        console.log("passwordError" + passwordError);
     }, [password]);
 
     const onSubmitForm = useCallback((e) => {

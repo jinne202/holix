@@ -4,7 +4,6 @@ import styled, { css, keyframes } from 'styled-components';
 import Link from 'next/link';
 import { useRouter } from "next/router";
 
-import dummyUserImg from '../../../dummydata/img/userImage.png';
 
 const DesktopNav = () => {
     const router = useRouter();
@@ -46,7 +45,9 @@ const DesktopNav = () => {
                         </Link>
                         <MenuList>Workshop<MenuHoverCircle>{svgIcon}</MenuHoverCircle></MenuList>
                         <MenuList>Jobs<MenuHoverCircle>{svgIcon}</MenuHoverCircle></MenuList>
-                        <MenuList>Store<MenuHoverCircle>{svgIcon}</MenuHoverCircle></MenuList>
+                        <Link href="/store">
+                            <MenuList>Store<MenuHoverCircle>{svgIcon}</MenuHoverCircle></MenuList>
+                            </Link>
                     </LeftMenuUl>
                 </LeftMenu>
                 <LogoWrapper>
@@ -62,7 +63,7 @@ const DesktopNav = () => {
                         <AfterLoginWrapper header={header}>
                             <LoginUserName>{myAccountInfo.nickname}</LoginUserName>
                             <LoginUserPhoto>
-                                <img src={dummyUserImg} alt="유저이미지"/>
+                                {/*<img src={} alt="유저이미지"/>*/}
                             </LoginUserPhoto>
                         </AfterLoginWrapper>
                     :

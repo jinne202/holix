@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { showSidebarRequest } from '../../reducers/layoutReducer';
 import Menubar from './Menubar';
 
-import dummyUserImg from '../../../dummydata/img/userImage.png';
 
 const MobileNav = () => {
 
@@ -72,9 +71,9 @@ const MobileNav = () => {
             <RightMenu>
                     {myAccountInfo ?
                         <AfterLoginWrapper header={header}>
-                            <LoginUserName>{myAccountInfo.nickname }</LoginUserName>
+                            <LoginUserName>{ myAccountInfo.nickname }</LoginUserName>
                             <LoginUserPhoto>
-                                <img src={dummyUserImg} alt="유저이미지"/>
+                                {/*<img src={} alt="유저이미지"/>*/}
                             </LoginUserPhoto>
                         </AfterLoginWrapper>
                     :

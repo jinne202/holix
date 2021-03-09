@@ -42,7 +42,7 @@ function* login(action){
         const result = yield call(loginAPI, action.data);
         yield put({
             type : LOG_IN_SUCCESS,
-            // data : result.data,
+            data : result.data,
         });
     } catch (e) {
         console.error(e);
@@ -85,6 +85,6 @@ export default function* userSaga() {
         fork(watchSignUp),
         fork(watchLoadUserInfo),
     ]);
-    yield fork(loadUserInfo); //처음 들어왔을 때나 새로고침 했을때만 유저 정보 로드
+    yield fork(loadUserInfo); //처음 들어왔을 때나 새로고침 했을때만 유저 정보 로
     
 }

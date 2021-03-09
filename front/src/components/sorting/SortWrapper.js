@@ -154,6 +154,7 @@ const SortLeftWrapper = styled.div`
     left : 0;
     display : flex;
     z-index : 50;
+    height : 400px;
 `
 
 

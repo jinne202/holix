@@ -6,7 +6,6 @@ import StoryCardComponents from '../components/StoryCardComponents';
 import SortWrapper from '../components/sorting/SortWrapper';
 import useScrollDirection from '../hooks/useScrollDirection';
 import { LOAD_POSTS_REQUEST } from '../reducers/projectReducer';
-import CustomCursorSample from '../components/CustomCursorSample';
 
 const Story = () => {
     const scrollDirection = useScrollDirection();
@@ -41,7 +40,6 @@ const Story = () => {
 
     return (
         <AppLayout>
-            <CustomCursorSample/>
             <SortStyle scoll={scrollDirection} header={header}>
                 <SortWrapper/>
             </SortStyle>

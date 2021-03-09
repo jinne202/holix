@@ -3,8 +3,12 @@ import axios from 'axios';
 
 import projectSaga from './projectSaga';
 import userSaga from './userSaga';
+import editProjectSaga from './editProjectSaga';
+import productSaga from './productSaga';
 
-axios.defaults.baseURL = 'http://hi-holix.com:8080';
+import * as ApiConfig from '../api/apiConfig';
+
+axios.defaults.baseURL = ApiConfig.apiHost;
 axios.interceptors.request.use(
     async config => {
         config.headers = {
@@ -21,5 +25,7 @@ export default function* rootSaga() {
   yield all([
     fork(projectSaga),
     fork(userSaga),
+    fork(editProjectSaga),
+    fork(productSaga),
   ]);
 }

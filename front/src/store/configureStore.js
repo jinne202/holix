@@ -7,7 +7,6 @@ import rootReducer from '../reducers'
 import rootSaga from '../sagas'
 
 const configureStore = (context) => {
-  console.log(context);
   const sagaMiddleware = createSagaMiddleware();
   const middlewares = [sagaMiddleware];
   const enhancer = composeWithDevTools(applyMiddleware(...middlewares))

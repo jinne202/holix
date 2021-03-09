@@ -15,7 +15,6 @@ body {
   font-size: 14px;
   background-color: #ffffff;
   font-family: 'Noto Sans KR', sans-serif;
-  cursor: none;
 }
 
 ul, li {
@@ -24,7 +23,7 @@ ul, li {
   margin : 0;
 }
 
-/* .scroll {
+.scroll {
   scroll-behavior: smooth;
   overflow: auto;
   width: 40%;
@@ -59,33 +58,4 @@ ul, li {
   .scrollbar-track-y, .scrollbar-thumb {
     width: 6px!important;
   }
-} */
-
-body::-webkit-scrollbar {
-  /* 스크롤바 전체 영역 */
-  width: 6px;
-  z-index : 9999!important;
-  display : block;
-}
-body::-webkit-scrollbar-track {
-  /* 스크롤이 움직이는 영역  */
-  background-color: #f9f9f9;
-  z-index : 9999!important;
-}
-body::-webkit-scrollbar-thumb {
-  /*  스크롤  */
-background-color: #bcbcbc;
-border-radius:30px;
-z-index : 9999!important;
-}
-body::-webkit-scrollbar-button:start:decrement,
-body::-webkit-scrollbar-button:end:increment {
-  /*  스크롤의 화살표가 포함된 영역   */
-display:block;
-height:8px;
-background-color: #f9f9f9;
-}
-body::-webkit-scrollbar-corner {
-  /*  상하+좌우 스크롤이 만나는 공간   */
-background-color: #f9f9f9;
 }

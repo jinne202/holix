@@ -104,7 +104,7 @@ const SortCategoryMiddle = styled.div`
     position : relative;
 `
 
-const CategoryTitle = styled.a`
+const CategoryTitle = styled.div`
     width : 100%;
     font-size : 48px;
     line-height : 70%;
