@@ -1,16 +1,14 @@
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { all, fork, put, takeLatest, throttle, call, takeEvery } from 'redux-saga/effects';
-import { LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE, SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE, LOAD_USERINFO_REQUEST, LOAD_USERINFO_SUCCESS, LOAD_USERINFO_FAILURE } from '../reducers/userReducer';
+import { LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE, LOG_OUT_REQUEST, LOG_OUT_SUCCESS, LOG_OUT_FAILURE, SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE, LOAD_USERINFO_REQUEST, LOAD_USERINFO_SUCCESS, LOAD_USERINFO_FAILURE } from '../reducers/userReducer';
 
 function loadUserInfoAPI() {
     return axios('/account')
 }
 
 function* loadUserInfo() {
-    console.log("loaduserinfo");
     try {
-        console.log("loaduserinfo");
         const result = yield call(loadUserInfoAPI);
         yield put({
             type: LOAD_USERINFO_SUCCESS,
@@ -26,20 +24,17 @@ function* loadUserInfo() {
 }
 
 function* watchLoadUserInfo() {
-    yield takeEvery(LOAD_USERINFO_REQUEST, loadUserInfo);
+    yield takeLatest(LOAD_USERINFO_REQUEST, loadUserInfo);
 }
 
 function loginAPI(data) {
-    return axios.post('/account/login', data)
-        .then(response => {
-            localStorage.setItem('token', response.headers.authorization)
-            console.log(response);
-        })
+    return axios.post('/account/login', data);
 }
 
 function* login(action){
     try {
         const result = yield call(loginAPI, action.data);
+        localStorage.setItem('token', result.headers.authorization)
         yield put({
             type : LOG_IN_SUCCESS,
             data : result.data,
@@ -55,6 +50,33 @@ function* login(action){
 
 function* watchLogin(){
     yield takeEvery(LOG_IN_REQUEST, login);
+}
+
+function logoutAPI() {
+    return axios.post('/account/logout')
+        .then(response => {
+            localStorage.setItem('token', null)
+            console.log(response);
+        })
+}
+
+function* logout(){
+    try {
+        const result = yield call(logoutAPI);
+        yield put({
+            type : LOG_OUT_SUCCESS
+        });
+    } catch (e) {
+        console.error(e);
+        yield put({
+            type : LOG_OUT_FAILURE,
+            reason : e.response && e.response.data,
+        });
+    }
+}
+
+function* watchLogout(){
+    yield takeEvery(LOG_OUT_REQUEST, logout);
 }
 
 function signUpAPI(data){
@@ -82,6 +104,7 @@ function* watchSignUp(){
 export default function* userSaga() {
     yield all([
         fork(watchLogin),
+        fork(watchLogout),
         fork(watchSignUp),
         fork(watchLoadUserInfo),
     ]);

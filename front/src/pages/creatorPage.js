@@ -1,5 +1,5 @@
 import React from 'react';
-import AppLayout from "../components/layout/AppLayout";
+import AppLayout from "components/archive/ArchiveLayout";
 
 const createPage = () => {
     return (

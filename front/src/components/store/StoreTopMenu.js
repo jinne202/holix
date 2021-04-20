@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Link from 'next/link';   
+import { LOG_OUT_REQUEST } from 'reducers/userReducer';
 
 const StoreTopMenu = () => {
+    const dispatch = useDispatch();
     const [isSticky, setSticky] = useState(false);
     const ref = useRef(null);
     const sticky = ref.current ? ref.current.offsetTop + ref.current.clientHeight : 0;
@@ -21,9 +23,20 @@ const StoreTopMenu = () => {
         };
       }, []);
 
+      const handleLogout = () => {
+        dispatch({
+            type: LOG_OUT_REQUEST
+        });
+    }
+
     return (
         <>
             <MenuWrapper  style={isSticky ? {position:'fixed', top:'0px'} : {position:'relative', top:''}}  ref={ref}>
+                <Link href="/">
+                <Logo>
+                    Holix
+                </Logo>
+                </Link>
                 <LeftMenu>
                     <ul>
                         <Link href="/store">
@@ -35,13 +48,11 @@ const StoreTopMenu = () => {
                         <Link href="/store">
                             <MenuList>Product</MenuList>
                         </Link>
+                        <Link href="/store/my/registerSeller">
+                            <MenuList>Seller</MenuList>
+                        </Link>
                     </ul>
                 </LeftMenu>
-                <Link href="/">
-                <Logo>
-                    Holix
-                </Logo>
-                </Link>
                 <RightMenu>
                     {myAccountInfo ?
                         <AfterLoginWrapper>
@@ -49,6 +60,15 @@ const StoreTopMenu = () => {
                             <LoginUserPhoto>
                                 {/*<img src={} alt="유저이미지"/>*/}
                             </LoginUserPhoto>
+                            <LoginWrapper >
+                                <ul>
+                                    <LoginMenuList onClick={handleLogout}>Logout</LoginMenuList>
+                                    <Link href="/store/edit"><LoginMenuList>
+                                        <ProjectBtn >
+                                            Product Submit
+                                        </ProjectBtn></LoginMenuList></Link>
+                                </ul>
+                            </LoginWrapper>
                         </AfterLoginWrapper>
                     :
                         <BeforeLoginWrapper>
@@ -126,7 +146,6 @@ const LoginText = styled.p`
 const LoginWrapper = styled.div`
     padding : 0;
     display : inline-block;
-    margin : 31px 22px 0 0;
 
     & > ul {
         display : flex;
@@ -144,6 +163,8 @@ const LoginMenuList = styled.li`
     line-height : 100%;
 `
 
+const BeforeLoginWrapper = styled.div`
+`
 
 const AfterLoginWrapper = styled.div`
     display : flex;
@@ -184,4 +205,25 @@ const LoginUserPhoto = styled.div`
     }
 `
 
+const ProjectBtn = styled.div`
+    width : 158px;
+    height : 40px;
+    border-radius : 40px;
+    background-color : black;
+    color : white;
+    line-height : 40px;
+    text-align : center;
+    font-weight : 700;
+    cursor : pointer;
+
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+
+    ${props =>
+    props.header === true &&
+    css`
+        margin : 8px 0 0;
+    `}
+`
 export default StoreTopMenu;

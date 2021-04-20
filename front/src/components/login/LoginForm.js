@@ -1,9 +1,10 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import Router from "next/router";
 import styled, { css } from 'styled-components';
-import useInput from '../hooks/useInput';
+import useInput from '../../hooks/useInput';
 import Fade from 'react-reveal/Fade';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginRequestAction } from '../reducers/userReducer';
+import { loginRequestAction } from 'reducers/userReducer';
 
 export const emailCheckRgx = (email) => {
     const emailCheckRegex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
@@ -22,6 +23,15 @@ const LoginForm = () => {
     const [password, onChangePassword] = useInput('');
     const [focusEmail, setFocusEmail] = useState(false);
     const [focusPassword, setFocusPassword] = useState(false);
+    const { isLoggedIn, myAccountInfo } = useSelector(state => state.userReducer);
+
+    useEffect(() => {
+        console.log("isLoggedIn" + isLoggedIn)
+        console.log("myAccountInfo" + myAccountInfo)
+        if (myAccountInfo) {
+            Router.push("/archive")
+        }
+    }, [isLoggedIn, myAccountInfo]);
 
     const onFocusInputEmail = () => {
         setFocusEmail(true);
@@ -44,7 +54,6 @@ const LoginForm = () => {
     }
 
     const buttonValid = isEveryValid();
-
     const onSubmitForm = useCallback((e) => {
         e.preventDefault();
         if (!isEveryValid()) {

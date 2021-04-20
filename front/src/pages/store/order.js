@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled, { css } from 'styled-components';
 import { useRouter, withRouter  } from "next/router";
@@ -7,22 +7,35 @@ import DaumPostcode from 'react-daum-postcode';
 import StoreTopMenu from "../../components/store/StoreTopMenu";
 import StoreFooter from "../../components/store/StoreFooter";
 
+import { ORDER_REQUEST } from '../../reducers/storeReducer';
+import useInput from '../../hooks/useInput';
+
 const clientKey = 'test_ck_D4yKeq5bgrpQjbZAOop8GX0lzW6Y';
 
 const imageHost = "https://holix.s3.ap-northeast-2.amazonaws.com/image/";
+
 const Order = () => {
     const dispatch = useDispatch();
     const router = useRouter();
     const { myAccountInfo } = useSelector((state) => state.userReducer);
-    const product = JSON.parse(localStorage.getItem('product'));
     const selectedOptions = JSON.parse(localStorage.getItem('selectedOptions'));
     const totalPrice = localStorage.getItem("totalPrice")
     const [optionDelCheck, setOptionDelCheck] = useState([]);
-    const [address, setAddress] = useState("");
-    const [remainingAddress, setRemainingAddress] = useState("");
+    const [receiver, setReceiver] = useInput("");
     const [zipCode, setZipCode] = useState("");
+    const [address, setAddress] = useState("");
+    const [remainingAddress, setRemainingAddress] = useInput("");
+    
     const [showAddressBox, setShowAddressBox] = useState(false);
-    const [emailHost, setEmailHost] = useState("");
+    const [firstNumber, setFirstNumber] = useInput('');
+    const [middleNumber, setMiddleNumber] = useInput('');
+    const [lastNumber, setLastNumber] = useInput('');
+    const [phoneNumber, handChangePhoneNumber, setPhoneNumber] = useInput('');
+    const [email, onChangeEmail, setEmail] = useInput('');
+    const [emailHost, setEmailHost] = useInput("");
+    const [message, setMessage] = useInput("");
+    const [productOrders, setProductOrders] = useState([]);
+
     var tossPayments = null;
     var isLoaded = false;
     useEffect(() => {
@@ -35,7 +48,21 @@ const Order = () => {
 
 
     const handlePayment = () => {
-        console.log(tossPayments);
+        selectedOptions.map((o) => {
+            o.product = o.product.id;
+        }); 
+
+        console.log(selectedOptions);
+        setPhoneNumber(firstNumber + middleNumber + lastNumber);
+        setEmail(email + "@" + emailHost);
+        return dispatch({
+            type : ORDER_REQUEST,
+            data : { receiver, zipCode, address, remainingAddress, phoneNumber, email, message, selectedOptions },
+        },  [receiver, zipCode, address, remainingAddress, phoneNumber, email, message, selectedOptions]);
+
+
+
+      /*  console.log(tossPayment   s);
         tossPayments.requestPayment('카드', {
             amount: Number(totalPrice),
             orderId: 'tn1jYc9N_ewJr7wttTKFc',
@@ -43,7 +70,7 @@ const Order = () => {
             customerName: '테스터',
             successUrl: 'http://localhost:8080/store/order',
             failUrl: 'http://localhost:8080/store/orderfail',
-          });
+          });*/
     }
 
     const hadleShowAdressBox = () => {
@@ -70,8 +97,9 @@ const Order = () => {
         setShowAddressBox(false);
     }
     
-    const handleEmail = (e) => {
-        setEmailHost(e.target.value);
+
+    const handleShowDelivery = () => {
+        
     }
 
     return (
@@ -113,20 +141,20 @@ const Order = () => {
                         <tbody>
                             { selectedOptions.map((o) => {
                                 var option, optionPrice;
-                                if (o.groupid != -1) {
-                                    option = product.optionGroups.find(g => g.id === o.groupid).options.find(option => option.id === o.id);
-                                    optionPrice = o.count * ((o.necessary ? product.price : 0) + option.addprice);
+                                if (o.groupId != -1) {
+                                    option = o.product.optionGroups.find(g => g.id === o.groupId).options.find(option => option.id === o.id);
+                                    optionPrice = o.count * ((o.necessary ? o.product.price : 0) + option.addprice);
                                 } else {
-                                    optionPrice = o.count * product.price;
+                                    optionPrice = o.count * o.product.price;
                                 }
                                 return (
                                     <tr>
                                         <td><input type="checkbox"/></td>
-                                        <td><img src ={imageHost+product.id+"_thumnail.png"} style={{width:'129px'}}/></td>
+                                        <td><img src ={imageHost + o.product.id+"_thumnail.png"} style={{width:'129px'}}/></td>
                                         <td>
-                                            <div style={{fontSize:'20px', fontWeight:'bold'}}>{product.title}</div>
+                                            <div style={{fontSize:'20px', fontWeight:'bold'}}>{o.product.title}</div>
                                             {
-                                                o.groupid != -1 ?
+                                                o.groupId != -1 ?
                                                 <div style={{fontSize:'14px', color:'#949494'}}>[옵션] {option.name}</div>
                                                 :
                                                 <></>
@@ -164,13 +192,19 @@ const Order = () => {
                         </caption>
                         <tbody>
                             <tr>
+                                <td>배송지 선택</td>
+                                <td><input name="deliveryRatio" type="radio"/><label>회원 정보와 동일</label><input name="deliveryRatio" type="radio"/><label>새 배송지</label>
+                                    <button onClick={handleShowDelivery}>주소록 보기</button>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>받으시는 분</td>
-                                <td><input type="text"/></td>
+                                <td><input type="text" value={receiver} onChange={setReceiver}/></td>
                             </tr>
                             <tr>
                                 <td>주소</td>
                                 <td>
-                                    <input type="text" value={zipCode} style={{width:'60px'}}/><button onClick={hadleShowAdressBox} style={{marginLeft:'5px'}}>우편번호</button>
+                                    <input type="text" readOnly={true} value={zipCode} style={{width:'60px'}}/><button onClick={hadleShowAdressBox} style={{marginLeft:'5px'}}>우편번호</button>
                                     { showAddressBox ?
                                         <DaumPostcode onComplete={handleAddress} style={{
                                             position:'absolute',
@@ -182,23 +216,23 @@ const Order = () => {
                                         : <></>
                                     }
                                     <br/>
-                                    <input type="text" value={address} style={{width:'400px',marginTop:'5px'}}/>
+                                    <input type="text" readOnly={true} value={address} style={{width:'400px',marginTop:'5px'}}/>
                                     <AddressGuideLabel>기본 주소</AddressGuideLabel>
                                     <br/>
-                                    <input type="text" style={{width:'400px',marginTop:'5px'}} value={remainingAddress} onChange={(e) => {setRemainingAddress(e.target.value)}}/>
+                                    <input type="text" style={{width:'400px',marginTop:'5px'}} value={remainingAddress} onChange={setRemainingAddress}/>
                                     <AddressGuideLabel>나머지 주소</AddressGuideLabel>
                                     <br/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>휴대전화</td>
-                                <td><input type="text" style={{width:'60px'}}/>-<input type="text" style={{width:'80px'}}/>-<input type="text" style={{width:'80px'}}/></td>
+                                <td><input type="text" value={firstNumber} onChange={setFirstNumber} style={{width:'60px'}}/>-<input type="text" value={middleNumber} onChange={setMiddleNumber}  style={{width:'80px'}}/>-<input type="text"  value={lastNumber} onChange={setLastNumber}  style={{width:'80px'}}/></td>
                             </tr>
                             <tr>
                                 <td>이메일</td>
                                 <td>
-                                    <input type="text"/> @ <input type="text" value={emailHost} onChange={handleEmail}/>
-                                    <select fw-label="주문자 이메일" fw-alone="N" onChange={handleEmail}>
+                                    <input type="text" value={email} onChange={onChangeEmail}/> @ <input type="text" value={emailHost} onChange={setEmailHost}/>
+                                    <select fw-label="주문자 이메일" fw-alone="N" onChange={setEmailHost}>
                                         <option value="" selected="selected">- 이메일 선택 -</option>
                                         <option value="naver.com">naver.com</option>
                                         <option value="daum.net">daum.net</option>
@@ -215,7 +249,7 @@ const Order = () => {
                             </tr>
                             <tr>
                                 <td>배송메시지</td>
-                                <td><textarea  style={{width:'400px', height:'100px'}}/></td>
+                                <td><textarea value={message} onChange={setMessage}  style={{width:'400px', height:'100px'}}/></td>
                             </tr>
                         </tbody>
                     </DeliveryTable>
@@ -512,4 +546,4 @@ const PayButton = styled.button`
     background-color: #84868b;
 `
 
-export default withRouter(Order);
+export default Order;

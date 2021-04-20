@@ -10,11 +10,11 @@ export default class ColorPicker extends OutsideClickWrapper {
         super(props);
         this.background = props.background;
         this.onChangeComplete = props.onChangeComplete;
+        this.visible = props.visible;
     }
     
     render() {
         if (this.visible) {
-            this.onChangeComplete;
             return (
                 <PickerWrap ref={this.wrapperRef}>
                     <SketchPicker
@@ -30,7 +30,10 @@ export default class ColorPicker extends OutsideClickWrapper {
 }
 
 const PickerWrap = styled.div`
-    position : absolute;
+    position : fixed;
+    left:30%;
+    top:30%;
     width: auto;
     display: inline-block;
+    z-index:99;
 `

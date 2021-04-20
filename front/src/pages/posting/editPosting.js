@@ -4,10 +4,10 @@ import useInput from '../../hooks/useInput';
 import styled, { css } from 'styled-components';
 import useScrollDirection from '../../hooks/useScrollDirection';
 import { useRouter, withRouter  } from "next/router";
-import { LOAD_POSTING_REQUEST } from '../../reducers/projectReducer';
+import { LOAD_POSTING_REQUEST } from '../../reducers/postingReducer';
 import { LOAD_CATEGORY_REQUEST } from '../../reducers/editProjectReducer';
 import CategoryList from "../../components/posting/CategoryList";
-import EditPostingForm from "../../components/posting/EditPostingForm";
+import EditPostingForm from "../../components/posting/EditContentsForm";
 import ImageContentsWrapper from "../../components/posting/ImageContentsWrapper";
 
 const EditPosting = () => {

@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter, withRouter  } from "next/router";
-import StoreLayout from "../components/layout/StoreLayout";
+import StoreLayout from "components/store/StoreLayout";
 import styled from 'styled-components';
-import ProductCardComponents from '../components/store/ProductCardComponents';
-import { LOAD_PRODUCTS_REQUEST } from '../reducers/productReducer';
+import ProductCardComponents from 'components/store/ProductCardComponents';
+import { LOAD_PRODUCTS_REQUEST } from 'reducers/storeReducer';
 
 const Store = () => {
     const router = useRouter();
-    const {productList, isLoading} = useSelector(state => state.productReducer);
+    const {productList, isLoading} = useSelector(state => state.storeReducer);
     const dispatch = useDispatch();
 
     useEffect(() => {

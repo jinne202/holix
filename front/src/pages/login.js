@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import Link from 'next/link';
 import Fade from 'react-reveal/Fade';
-import AppLayout from "../components/layout/AppLayout";
-import LoginForm from '../components/LoginForm';
-import RegisterForm from '../components/RegisterForm';
+import AppLayout from "components/archive/ArchiveLayout";
+import LoginForm from 'components/login/LoginForm';
+import RegisterForm from 'components/login/RegisterForm';
 
 const Login = () => {
     const [active, setActive] = useState(1);

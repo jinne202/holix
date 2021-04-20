@@ -2,26 +2,27 @@ import React from "react";
 import Link from 'next/link';
 import styled from "styled-components";
 
-const StoryCardComponents = ({ posting }) => {
-    const imageHost = "https://holix.s3.ap-northeast-2.amazonaws.com/image/";
+const ArchiveCardComponent = ({ archive }) => {
+    const imageHost = "https://holix.s3.ap-northeast-2.amazonaws.com/image/archive/";
+    const titleImages = archive.postingInfo.titleimages.split(',');
+    let potingInfo = archive.postingInfo;
+    let mainImage = titleImages.length > 0 ? <img src={imageHost + archive.archiveInfo.id + "/" + titleImages[0]}/> : <div style={{background : potingInfo.gradientcolor}}></div>
 
-    let mainImage = posting.titleImage ? <img src={imageHost+posting.titleImage}/> : <div style={{background : posting.titleColor}}></div>
-
-    const bottomColor = posting.gradientColor;
-
+    const bottomColor = archive.gradientColor;
+console.log( potingInfo)
     return (
             <StoryCardWrapper>
-                <Link href={{ pathname: 'posting/' + posting.id }}>
+                <Link href={{ pathname: 'archive/' + archive.archiveInfo.id }}>
                 <StoryCardUI>
                     <StoryCardImgWrapper bottomColor={bottomColor}>
                         {mainImage}
-                        <StoryTitle>{posting.title}</StoryTitle>
+                        <StoryTitle>{potingInfo.title}</StoryTitle>
                     </StoryCardImgWrapper>
                 </StoryCardUI>
                 </Link>
                 <StoryInfo>
                     <UserInfo>
-                        <UserName>유저는아직</UserName>
+                        <UserName>{potingInfo.account}</UserName>
                     </UserInfo>
                 </StoryInfo>
             </StoryCardWrapper>
@@ -115,4 +116,4 @@ const UserName = styled.p`
     padding : 3px 0;
 `
 
-export default StoryCardComponents;
+export default ArchiveCardComponent;

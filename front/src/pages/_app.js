@@ -4,6 +4,7 @@ import '../styles/global.css';
 import wrapper from '../store/configureStore';
 
 const Holix = ({ Component }) => {
+
   return (
     <>
       <Head>

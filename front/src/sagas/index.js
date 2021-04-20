@@ -1,10 +1,12 @@
 import { all, fork } from 'redux-saga/effects';
 import axios from 'axios';
 
-import projectSaga from './projectSaga';
+import projectSaga from './postingSaga';
 import userSaga from './userSaga';
 import editProjectSaga from './editProjectSaga';
-import productSaga from './productSaga';
+import deliverySaga from './deliverySaga';
+import storeSaga from './storeSaga';
+import archiveSaga from './archiveSaga';
 
 import * as ApiConfig from '../api/apiConfig';
 
@@ -26,6 +28,8 @@ export default function* rootSaga() {
     fork(projectSaga),
     fork(userSaga),
     fork(editProjectSaga),
-    fork(productSaga),
+    fork(deliverySaga),
+    fork(storeSaga),
+    fork(archiveSaga)
   ]);
 }

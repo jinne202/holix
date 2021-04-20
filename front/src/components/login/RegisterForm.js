@@ -1,10 +1,10 @@
 import React, { useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import Fade from 'react-reveal/Fade';
-import useInput from '../hooks/useInput';
-import Checkbox from './Checkbox';
+import useInput from 'hooks/useInput';
+import Checkbox from '../Checkbox';
 import { useDispatch, useSelector } from 'react-redux';
-import { SIGN_UP_REQUEST } from '../reducers/userReducer';
+import { SIGN_UP_REQUEST } from 'reducers/userReducer';
 
 export const emailCheckRgx = (email) => {
     const emailCheckRegex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
@@ -69,12 +69,8 @@ const RegisterForm = () => {
     }
 
     const onChangePasswordCheck = useCallback((e) => {
-        console.log("e.target.value" + e.target.value);
-        console.log("password" + password);
-        console.log("e.target.value !== password)" + (e.target.value !== password));
         setPasswordError(e.target.value !== password);
         setPasswordCheck(e.target.value);
-        console.log("passwordError" + passwordError);
     }, [password]);
 
     const onSubmitForm = useCallback((e) => {

@@ -5,11 +5,11 @@ import Link from 'next/link';
 import Scrollbar from 'react-smooth-scrollbar';
 import { useRouter } from "next/router";
 
-import DesktopNav from './DesktopNav';
-import MobileNav from './MobileNav';
-import useWindowSize from '../../hooks/useWindowSize';
+import ArchiveTopMenu from './ArchiveTopMenu';
+import MobileNav from '../layout/MobileNav';
+import useWindowSize from 'hooks/useWindowSize';
 
-const AppLayout = ({ children }) => {
+const  ArchiveLayout  = ({ children }) => {
 
     const windowSize = useWindowSize();
 
@@ -47,7 +47,7 @@ const AppLayout = ({ children }) => {
     return (
         <> 
             <NavWrapper>
-            {mobile ? <MobileNav/> : <DesktopNav/>}
+            {mobile ? <MobileNav/> : <ArchiveTopMenu/>}
             </NavWrapper>
             {showSidebar
             ?
@@ -78,4 +78,4 @@ const ContentWrapper = styled.div`
     padding : 82px 0 0 0;
 `
 
-export default AppLayout;
+export default ArchiveLayout;

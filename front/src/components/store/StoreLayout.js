@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
-import StoreTopMenu from '../store/StoreTopMenu';
-import StoreFooter from '../store/StoreFooter';
+import StoreTopMenu from './StoreTopMenu';
+import StoreFooter from './StoreFooter';
 
 const StoreLayout = ({ children }) => {
     return (

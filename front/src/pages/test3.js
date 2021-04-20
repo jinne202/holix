@@ -1,6 +1,6 @@
 import React from 'react';
 import SortCategory2 from '../components/SortCategory2'
-import AppLayout from '../components/layout/AppLayout';
+import AppLayout from '../components/archive/ArchiveLayout';
 
 const test3 = () => {
     return (

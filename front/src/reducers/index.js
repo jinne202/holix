@@ -1,23 +1,25 @@
 import { combineReducers } from 'redux';
 import { HYDRATE } from 'next-redux-wrapper';
 import { userReducer } from './userReducer';
-import { projectReducer } from './projectReducer';
 import { layoutReducer } from './layoutReducer';
 import { editProjectReducer } from './editProjectReducer';
-import { productReducer } from './productReducer';
-
+import { postingReducer } from './postingReducer';
+import { deliveryReducer } from './deliveryReducer';
+import { storeReducer } from './storeReducer';
+import { archiveReducer } from './archiveReducer'
 const rootReducer = (state, action) => {
     switch (action.type) {
         case HYDRATE:
-        console.log('HYDRATE', action);
         return action.payload;
         default: {
         const combinedReducer = combineReducers({
             userReducer,
-            projectReducer,
             layoutReducer,
             editProjectReducer,
-            productReducer,
+            postingReducer,
+            deliveryReducer,
+            storeReducer,
+            archiveReducer,
         });
         return combinedReducer(state, action);
         }

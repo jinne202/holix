@@ -29,7 +29,6 @@ export default class OutsideClickWrapper extends Component {
         if (this.wrapperRef && this.wrapperRef.current && !this.wrapperRef.current.contains(event.target)) {
             this.visible = !this.visible;
             this.forceUpdate();
-            console.log(this.visible);
         }
     }
 }

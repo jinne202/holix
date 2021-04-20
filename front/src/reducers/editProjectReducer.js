@@ -1,5 +1,6 @@
 export const editProjectReducerInitialState = {
-    category : [],
+    category : null,
+    subInfos : null,
     mapList : [],
     isLoadingConfig: true,
     posting: Object,
@@ -35,7 +36,8 @@ export const editProjectReducer = (state = editProjectReducerInitialState, actio
             return {
                 ...state,
                 isLoadingConfig : false,
-                category : action.data,
+                category : action.data.category,
+                subInfos : action.data.subinfo,
             }
         }
         case LOAD_CATEGORY_FAILURE : {

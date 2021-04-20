@@ -1,23 +1,28 @@
 import React from "react";
 import Link from 'next/link';
 import styled from "styled-components";
-
+import {imageHost} from 'api/apiConfig'
 const ProductCardComponents = ({ product }) => {
     const imageHost = "https://holix.s3.ap-northeast-2.amazonaws.com/image/";
 
-
+    const titleImages = product.postingInfo.titleimages.split(',');
     return (
             <ProductCardWrapper>
-                <Link href = {{ pathname : 'store/' + product.id }}>
+                <Link href = {{ pathname : 'store/' + product.productInfo.id }}>
                 <ProductCardUI>
                     <ProductCardImgWrapper>
-                        <img src={imageHost+product.id+"_thumnail.png"}/>
+                        {
+                            titleImages.length > 0 ?
+                            <img src={imageHost + "store/" + product.productInfo.id + "/" + titleImages[0]}/>
+                            :
+                            <></>
+                        }
                     </ProductCardImgWrapper>
                 </ProductCardUI>
                 </Link>
                 <ProductInfo>
-                    <Title>{product.title}</Title>
-                    <Price>{product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</Price>
+                    <Title>{product.postingInfo.title}</Title>
+                    <Price>{product.productInfo.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원</Price>
                 </ProductInfo>
             </ProductCardWrapper>
     )

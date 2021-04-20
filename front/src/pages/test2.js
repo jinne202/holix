@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
-import AppLayout from '../components/layout/AppLayout';
+import AppLayout from '../components/archive/ArchiveLayout';
 
 
 const testt = () => {

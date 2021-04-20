@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled, { css, keyframes } from 'styled-components';
 import Link from 'next/link';
 import { useRouter } from "next/router";
+import { LOG_OUT_REQUEST } from 'reducers/userReducer';
 
 
-const DesktopNav = () => {
+const ArchiveTopMenu = () => {
+    const dispatch = useDispatch();
     const router = useRouter();
 
     const svgIcon = <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -23,13 +25,18 @@ const DesktopNav = () => {
         return setHeader(true);
         }
     };
-
     useEffect(() => {
         window.addEventListener("scroll", listenScrollEvent);
+        
         return () => window.removeEventListener("scroll", listenScrollEvent);
     }, []);
+    
+    const handleLogout = () => {
+        dispatch({
+            type: LOG_OUT_REQUEST
+        });
+    }
 
-    console.log(header);
     // !-- HEADER 높이
 
     return (
@@ -65,21 +72,27 @@ const DesktopNav = () => {
                             <LoginUserPhoto>
                                 {/*<img src={} alt="유저이미지"/>*/}
                             </LoginUserPhoto>
+                            <LoginWrapper header={header}>
+                                <ul>
+                                    <LoginMenuList onClick={handleLogout}>Logout</LoginMenuList>
+                                    <Link href="archive/edit"><LoginMenuList>
+                                        <ProjectBtn header={header}>
+                                            Project Submit
+                                        </ProjectBtn></LoginMenuList></Link>
+                                </ul>
+                            </LoginWrapper>
                         </AfterLoginWrapper>
                     :
                         <BeforeLoginWrapper>
                             <LoginText header={header}>Are you a holixer?</LoginText>
                             <LoginWrapper header={header}>
                                 <ul>
-                                <Link href="/register"><LoginMenuList>Register</LoginMenuList></Link>
+                                    <Link href="/register"><LoginMenuList>Register</LoginMenuList></Link>
                                     <Link href="/login"><LoginMenuList>Login</LoginMenuList></Link>
                                 </ul>
                             </LoginWrapper>
                         </BeforeLoginWrapper>
                     }
-                    <ProjectBtn header={header}>
-                        Project Submit
-                    </ProjectBtn>
                 </RightMenu>
             </MenuWrapper>
         </>
@@ -314,7 +327,7 @@ const LoginText = styled.p`
 const LoginWrapper = styled.div`
     padding : 0;
     display : inline-block;
-    margin : 31px 22px 0 0;
+    
 
     & > ul {
         display : flex;
@@ -343,7 +356,6 @@ const LoginMenuList = styled.li`
 `
 
 const ProjectBtn = styled.div`
-    margin : 21px 0 0;
     width : 158px;
     height : 40px;
     border-radius : 40px;
@@ -365,4 +377,4 @@ const ProjectBtn = styled.div`
     `}
 `
 
-export default DesktopNav;
+export default ArchiveTopMenu;

@@ -1,39 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import ArchiveLayout from "components/archive/ArchiveLayout";
 import styled, { css } from 'styled-components';
-import useScrollDirection from '../../hooks/useScrollDirection';
-import { useRouter, withRouter  } from "next/router";
-import { LOAD_POSTING_REQUEST } from '../../reducers/projectReducer';
+import ArchiveCardComponent from 'components/archive/ArchiveCardComponent';
+import SortWrapper from 'components/sorting/SortWrapper';
+import useScrollDirection from 'hooks/useScrollDirection';
+import { LOAD_ARCHIVES_REQUEST } from 'reducers/archiveReducer';
 
-const Posting = () => {
+const Main = () => {
     const scrollDirection = useScrollDirection();
-    const { posting } = useSelector(state => state.projectReducer);
+    const { archiveList, isLoaded} = useSelector(state => state.archiveReducer);
     const dispatch = useDispatch();
-    const router = useRouter();
 
-    function isLoadedRouter() {
-        return (Object.keys(router.query).length > 0);
-    }
-    const isLoadRouter = isLoadedRouter();
     useEffect(() => {
-        console.log("isLoadRouter" + isLoadRouter);
-        if (!isLoadRouter) return;
         dispatch({
-            type: LOAD_POSTING_REQUEST,
-            id: router.query.id,
+          type: LOAD_ARCHIVES_REQUEST,
         });
-    }, [isLoadRouter]);
+    }, []);
 
     // !-- HEADER 높이
     const [header, setHeader] = useState(false);
     const listenScrollEvent = event => {
         if (window.scrollY < 199) {
-            return setHeader(false);
+        return setHeader(false);
         } else if (window.scrollY > 200) {
-            return setHeader(true);
+        return setHeader(true);
         }
-    };
-
+    };  
+console.log(archiveList)
     useEffect(() => {
         window.addEventListener("scroll", listenScrollEvent);
         return () => window.removeEventListener("scroll", listenScrollEvent);
@@ -41,12 +35,22 @@ const Posting = () => {
 
     console.log(header);
     // !-- HEADER 높이
-    console.log("isLoadRouter" + isLoadRouter);
-    console.log("psting");
-    console.log(posting);
+
+    console.log(archiveList);
+
     return (
-        <div dangerouslySetInnerHTML={{ __html: posting != null ? posting.body : "" }}>
-        </div>
+        <ArchiveLayout>
+            <SortStyle scoll={scrollDirection} header={header}>
+                <SortWrapper/>
+            </SortStyle>
+            <TestGrid>
+            {archiveList.map((c) => {
+                return (
+                <ArchiveCardComponent key={c.index} archive={c} />
+                );
+            })}
+            </TestGrid>
+        </ArchiveLayout>
     )
 }
 
@@ -102,4 +106,4 @@ const SortStyle = styled.div`
     `}
 `
 
-export default withRouter(Posting);
+export default Main;

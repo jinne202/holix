@@ -27,13 +27,13 @@ function* watchLoadProjectPosting() {
     yield takeLatest(LOAD_POSTING_REQUEST, loadProjectPosting);
 }
 
-function loadCategoryAPI() {
-  return axios.get(`/category`);
+function loadCategoryAPI(categoryType) {
+  return axios.get(`/posting/getinfos?type=` + categoryType);
 }
 
-function* loadCategory(){
+function* loadCategory(data){
   try {
-      const result = yield call(loadCategoryAPI);
+      const result = yield call(loadCategoryAPI, data.categoryType);
       yield put({
           type : LOAD_CATEGORY_SUCCESS,
           data : result.data,

@@ -1,20 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled, { css, keyframes } from 'styled-components';
 import { useRouter } from "next/router";
+import ImageButton from './ImageButton'
 
-const SideMenu = ({ menus }) => {
-    
-    return (
-        <MenuWrapper>
-            <ul>
+export default class SideMenu extends Component {
+    constructor(props) {
+        super(props);
+        this.menus = props.menus;
+    }
+    state = {
+        top : 30
+    }
 
-                {menus.map((menu, index) =>
-                    <MenuList key={index}><ImageButton name={menu.name} onClick={menu.onClick}/></MenuList>
-                )}
-            </ul>
-        </MenuWrapper>
-    )
+    render() {
+        return (
+            <MenuWrapper style={{top:this.state.top}}>
+                <ul>
+
+                    {this.menus.map((menu, index) =>
+                        <MenuList key={index} onClick={menu.onClick}><ImageButton name={menu.name}/></MenuList>
+                    )}
+                </ul>
+            </MenuWrapper>
+        )
+    }
 }
 
 const MenuWrapper = styled.div`
@@ -26,24 +36,22 @@ const MenuWrapper = styled.div`
     position: absolute;
     top: 30px;
     right: 60px;
-    z-index: 1;
+    z-index: 99;
     ${props =>
     props.header === true &&
     css`
         height : 56px;
     `}
+
+    & > ul {
+        left: 32%;
+        position: relative;
+    }
 `
 
-const ImageButton = styled.button`
-    width: 30px;
-    height: 30px;
-    border: 0;
-    background: url(${require(`../../../images/editor/addImage.png`)});
-    background-size: cover;
-`
 const MenuList = styled.li`
-    padding-bottom: 10px;
+    margin-bottom: 10px;
     float: inherit;
+    width:30px;
+    height:30px;
 `
-
-export default SideMenu;

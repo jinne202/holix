@@ -1,56 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import AppLayout from "../components/layout/AppLayout";
 import styled, { css } from 'styled-components';
-import StoryCardComponents from '../components/StoryCardComponents';
-import SortWrapper from '../components/sorting/SortWrapper';
-import useScrollDirection from '../hooks/useScrollDirection';
-import { LOAD_POSTS_REQUEST } from '../reducers/projectReducer';
 
 const Main = () => {
-    const scrollDirection = useScrollDirection();
-    const {projectPosts, isLoadingPosts} = useSelector(state => state.projectReducer);
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch({
-          type: LOAD_POSTS_REQUEST,
-        });
-    }, []);
-
-    // !-- HEADER 높이
-    const [header, setHeader] = useState(false);
-    const listenScrollEvent = event => {
-        if (window.scrollY < 199) {
-        return setHeader(false);
-        } else if (window.scrollY > 200) {
-        return setHeader(true);
-        }
-    };
-
-    useEffect(() => {
-        window.addEventListener("scroll", listenScrollEvent);
-        return () => window.removeEventListener("scroll", listenScrollEvent);
-    }, []);
-
-    console.log(header);
-    // !-- HEADER 높이
-
-    console.log(projectPosts);
+    
 
     return (
-        <AppLayout>
-            <SortStyle scoll={scrollDirection} header={header}>
-                <SortWrapper/>
-            </SortStyle>
-            <TestGrid>
-            {projectPosts.map((c) => {
-                return (
-                <StoryCardComponents key={c.index} posting={c} />
-                );
-            })}
-            </TestGrid>
-        </AppLayout>
+        <div style={{fontSize:'24px', textAlign:'center', top:'40%', left:'0%',position:'absolute'}}>
+            오픈 예정
+        </div>
     )
 }
 

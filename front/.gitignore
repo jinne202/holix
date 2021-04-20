@@ -7,3 +7,5 @@ src.zip
 front/front.sln
 front/.gitignore
 front/.vs/front/xs/UserPrefs.xml
+src/main/generated
+src/main/generated/
